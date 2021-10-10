@@ -1,20 +1,27 @@
 /// <reference types="cypress" />
 var faker = require('faker');
 
+const credentials = require('../fixtures/credentials.json')
+
 describe('Projeto Backend', () => {
 
     beforeEach(() => {
-        cy.visit('https://app.pipefy.com/')
-        cy.get('.auth0-lock-input-username > .auth0-lock-input-wrap > .auth0-lock-input').type('marisil.tere@gmail.com')
-        cy.get('.auth0-lock-input-show-password > .auth0-lock-input-block > .auth0-lock-input-wrap > .auth0-lock-input').type('Yellow15@')
-        cy.get('.auth0-lock-submit').click()
+        cy.visit('/')
+        cy.fixture('credentials').then(dados =>{
+            cy.login(dados.email, dados.password)
+
+        })
         cy.get('.pp-color-text-base')
             .should('contain', 'Mariana')
     });
 
-    it.only('Autenticacao Token', () => {
+    afterEach(() => {
+        cy.screenshot()
+    });
+
+    it('Autenticacao Token', () => {
         
-        cy.visit('https://app.pipefy.com/tokens')
+        cy.visit('/tokens')
         cy.get('[class="pp-font-2"]')
             .should('contain', 'Personal access tokens')
         cy.get('.col-md-8 > .pp-btn').click()
@@ -33,6 +40,23 @@ describe('Projeto Backend', () => {
         cy.get('.button-green').click()
         
     });
+
+    it.only('Preencher novo card com sucesso', () => {
+
+        let name = faker.random.word()
+        let desc = faker.random.words()
+
+        cy.get(':nth-child(4) > .PipeBox__Box-sc-1do4p5t-1 > .PipeBox__BoxAnchor-sc-1do4p5t-2').click()
+        cy.get('[data-testid=new-card-button] > [data-testid=interface-icon-add-little-sm] > div > .injected-svg').click()
+        cy.get(':nth-child(1) > .pp-base-field-content > .pp-input-wrap > [data-testid=short-text-field]')
+            .type(name)
+        cy.get('[data-testid=long-text-field]').type(desc)
+        cy.get('[data-testid=start-form-click-on-button]').click()
+        cy.get('.sc-pbIaG > .pp-clear-button-style').should('contain', 'Product Development')
+
+    });
+
+
         
 });
     

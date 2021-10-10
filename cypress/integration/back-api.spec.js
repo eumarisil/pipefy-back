@@ -7,12 +7,18 @@ describe('Teste com API', () => {
         cy.request({
 
             method: 'POST',
-            url: '/',
-            body: '{"query":"CreatePhaseFieldInput"}',
-            headers: {Accept: 'application/json', Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjozMDE0MjAwMDYsImVtYWlsIjoibWFyaXNpbC50ZXJlQGdtYWlsLmNvbSIsImFwcGxpY2F0aW9uIjozMDAxMTc0MTF9fQ.KYEYz9pHneeoHj6XPxyLZbgf_hwn-WXe6YRVICrcTdc9wVILoWiGKoCrgZBD-pT5ko0zhcDdRiHYKfiooe7Gew', 'Content-Type': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjozMDE0MjAwMDYsImVtYWlsIjoibWFyaXNpbC50ZXJlQGdtYWlsLmNvbSIsImFwcGxpY2F0aW9uIjozMDAxMTc0MTF9fQ.KYEYz9pHneeoHj6XPxyLZbgf_hwn-WXe6YRVICrcTdc9wVILoWiGKoCrgZBD-pT5ko0zhcDdRiHYKfiooe7Gew'}         
-               
+            url: 'https://api.pipefy.com/graphql',
+            body: '{"query":"createPhaseField"}',
+            failOnStatusCode: false,
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjozMDE0MjAwMDYsImVtYWlsIjoibWFyaXNpbC50ZXJlQGdtYWlsLmNvbSIsImFwcGxpY2F0aW9uIjozMDAxMTc0MTN9fQ.PiYXsaMkoBAz4cAEJw70QwPZ5XIefb5QojBGIogUeQmZmC3JOLq1xNoZGYPP90PN3rugk8gWNx8J1CqB_ZxKFg',
+                'Content-Type': 'application/json'
+              },
+        }).then((response) => {
+            expect(response.status).to.eq(200)
         })
-        
-    });
-    
+
+    })  
+
 });

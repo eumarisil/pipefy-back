@@ -23,3 +23,10 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('login', (email, password) => { 
+    cy.get('.auth0-lock-input-username > .auth0-lock-input-wrap > .auth0-lock-input').type(email)
+    cy.get('.auth0-lock-input-show-password > .auth0-lock-input-block > .auth0-lock-input-wrap > .auth0-lock-input').type(password, {log: false})
+    cy.get('.auth0-lock-submit').click()
+
+ })
